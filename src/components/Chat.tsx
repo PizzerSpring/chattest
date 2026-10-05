@@ -13,7 +13,7 @@ export const Chat = () => {
         <div>
             <MessageList messages={messages}/>
             <ChatInput addMessage={(msg) => {
-                setMessages([...messages, {id: Date.now(), text: msg}]);
+                setMessages(prev =>[...prev, {id: Date.now(), text: msg}]);
             }}/>
         </div>
     );
