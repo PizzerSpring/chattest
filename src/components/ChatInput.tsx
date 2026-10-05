@@ -1,4 +1,5 @@
 import {ChangeEvent,KeyboardEvent, useState} from "react";
+import styles from './ChatInput.module.css';
 
 type ChatInputType = {
     addMessage: (value: string) => void
@@ -26,7 +27,7 @@ export const ChatInput = ({addMessage}: ChatInputType) => {
     }
 
     return (
-        <div>
+        <div className={`${styles.flexContainer} ${styles.footer}`}>
             <input type="text" value={value} onChange={onChangeHandler} onKeyPress={onEnterKeyPressHandler}/>
             <button onClick = {addMessageHandler}>Send</button>
         </div>

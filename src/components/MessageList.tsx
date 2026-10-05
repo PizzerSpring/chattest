@@ -1,4 +1,6 @@
 import type {MessageType} from "../types";
+import styles from './MessageList.module.css';
+import SideBar from "./SideBar";
 
 type MessageListType = {
     messages: MessageType[]
@@ -6,7 +8,8 @@ type MessageListType = {
 
 export const MessageList = ({messages}: MessageListType) => {
     return (
-        <div>
+        <div className={styles.flexContainer}>
+            <SideBar/>
             <ul>
                 {messages.map((msg) => {
                     return (

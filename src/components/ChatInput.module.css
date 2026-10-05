@@ -1,0 +1,10 @@
+.flexContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.footer {
+    background: linen;
+    height: 50px;
+    padding: 10px;
+}

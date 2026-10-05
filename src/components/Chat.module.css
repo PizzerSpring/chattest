@@ -1,0 +1,10 @@
+.brd {
+    border: 1px solid black;
+    min-height: 100vh;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
