@@ -1,19 +1,19 @@
+import type {MessageType} from "../types";
 
 type MessageListType = {
-    messages: string[]
+    messages: MessageType[]
 }
 
 export const MessageList = ({messages}: MessageListType) => {
     return (
         <div>
-            {messages.map(msg => {
-                return (
-                    <ul>
-                        <li>{msg}</li>
-                    </ul>
-                )
-            })}
-
+            <ul>
+                {messages.map((msg) => {
+                    return (
+                        <li key={msg.id}>{msg.text}</li>
+                    )
+                })}
+            </ul>
         </div>
     );
 };
