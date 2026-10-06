@@ -18,14 +18,16 @@ export const Chat = () => {
     useEffect(() => {
         fetch('http://localhost:3000/rooms')
             .then(res => res.json())
-            .then(data =>  setRooms(data));
+            .then(data => setRooms(data));
 
     }, []);
 
     return (
         <div className = {`${styles.brd} ${styles.flexContainer}`}>
             <Header/>
-            <MessageList activeRoom={activeRoom} setActiveRoom={setActiveRoom} messages={messages} rooms={rooms}/>
+            <MessageList activeRoom={activeRoom} setActiveRoom={setActiveRoom} messages={messages} rooms={rooms} addRoom={(room) => {
+                setRooms(prev =>[...prev, room]);
+            }}/>
             <ChatInput addMessage={(msg) => {
                 setMessages(prev =>[...prev, {id: Date.now(),roomId: activeRoom, text: msg}]);
             }}/>

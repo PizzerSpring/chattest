@@ -7,15 +7,16 @@ type MessageListType = {
     rooms: RoomType[]
     setActiveRoom: (roomId: number) => void
     activeRoom: number
+    addRoom: (room: RoomType) => void
 }
 
-export const MessageList = ({messages, rooms, setActiveRoom, activeRoom}: MessageListType) => {
+export const MessageList = ({messages, rooms, setActiveRoom, activeRoom, addRoom}: MessageListType) => {
 
     const filteredMessages = messages.filter(msg => msg.roomId === activeRoom);
 
     return (
         <div className={styles.flexContainer}>
-            <SideBar setActiveRoom={setActiveRoom} rooms={rooms}/>
+            <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addRoom}/>
             <ul className={styles.flxGrowMsg}>
                 {filteredMessages.map((msg) => {
                     return (
