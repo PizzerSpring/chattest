@@ -1,15 +1,25 @@
 import styles from './SideBar.module.css'
+import type {RoomType} from "../types";
 
-export const SideBar = () => {
+type SideBarType = {
+    rooms: RoomType[]
+    setActiveRoom: (roomId: number) => void
+}
+
+export const SideBar = ({rooms, setActiveRoom}: SideBarType) => {
     return (
         <div className={styles.bg}>
             <ul>
-                <li>Группа 1</li>
-                <li>Группа 2</li>
-                <li>Группа 3</li>
+                {rooms.map(r => {
+                    return (
+                        <li key={r.id} onClick={() => {
+                            setActiveRoom(r.id);
+
+                        }}>{r.name}</li>
+                    )
+                })}
             </ul>
         </div>
     );
 };
 
-export default SideBar;

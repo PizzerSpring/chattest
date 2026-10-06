@@ -28,8 +28,8 @@ export const ChatInput = ({addMessage}: ChatInputType) => {
 
     return (
         <div className={`${styles.flexContainer} ${styles.footer}`}>
-            <input type="text" value={value} onChange={onChangeHandler} onKeyPress={onEnterKeyPressHandler}/>
-            <button onClick = {addMessageHandler}>Send</button>
+            <input className={styles.flexGrowInp} type="text" value={value} onChange={onChangeHandler} onKeyPress={onEnterKeyPressHandler}/>
+            <button className={styles.btn} onClick = {addMessageHandler}>Send</button>
         </div>
     );
 };

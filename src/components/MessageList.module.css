@@ -4,3 +4,7 @@
     border: 1px solid red;
     flex-grow: 1;
 }
+
+.flxGrowMsg {
+    flex-grow: 1;
+}

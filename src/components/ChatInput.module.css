@@ -8,3 +8,11 @@
     height: 50px;
     padding: 10px;
 }
+
+.flexGrowInp {
+    flex-grow: 1;
+}
+
+.btn {
+    width: 200px;
+}
