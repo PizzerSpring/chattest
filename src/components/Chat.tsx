@@ -1,6 +1,6 @@
 import {MessageList} from "./MessageList";
 import {ChatInput} from "./ChatInput";
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import type {MessageType, RoomType} from "../types";
 import styles from './Chat.module.css';
 import {Header} from "./Header";
@@ -11,10 +11,16 @@ export const Chat = () => {
         {id: 2, roomId: 1, text: 'how are you'}
     ]);
     const [rooms, setRooms] = useState<RoomType[]>([
-        {id: 1, name: 'flud'},
-        {id: 2, name: 'it-chat'},
+
     ]);
     const [activeRoom, setActiveRoom] = useState(1);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/rooms')
+            .then(res => res.json())
+            .then(data =>  setRooms(data));
+
+    }, []);
 
     return (
         <div className = {`${styles.brd} ${styles.flexContainer}`}>

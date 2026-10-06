@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const rooms = [
     {id: 1, name: 'flud'},
@@ -7,6 +8,7 @@ const rooms = [
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/rooms', (req, res) => {
