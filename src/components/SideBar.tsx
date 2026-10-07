@@ -29,8 +29,15 @@ export const SideBar = ({rooms, setActiveRoom, addRoom}: SideBarType) => {
             })
                 .then(res => res.json())
                 .then(data => addRoom(data))
+            setValue('');
         }
-        setValue('');
+    }
+
+    const deleteChatHandler = (roomId: number) => {
+        fetch(`http://localhost:3000/rooms/${roomId}`,  {
+            method: 'DELETE',
+        })
+
     }
 
     return (
@@ -38,10 +45,15 @@ export const SideBar = ({rooms, setActiveRoom, addRoom}: SideBarType) => {
             <ul>
                 {rooms.map(r => {
                     return (
-                        <li key={r.id} onClick={() => {
+                        <div key={r.id}>
+                        <li onClick={() => {
                             setActiveRoom(r.id);
 
                         }}>{r.name}</li>
+                        <button onClick={() => {
+                            deleteChatHandler(r.id);
+                        }}>X</button>
+                        </div>
                     )
                 })}
             </ul>
