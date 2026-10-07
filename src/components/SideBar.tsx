@@ -1,5 +1,7 @@
 import styles from './SideBar.module.css'
 import type {RoomType} from "../types";
+import {useState} from "react";
+import {ChangeEvent} from "react";
 
 type SideBarType = {
     rooms: RoomType[]
@@ -9,17 +11,26 @@ type SideBarType = {
 
 export const SideBar = ({rooms, setActiveRoom, addRoom}: SideBarType) => {
 
-    const addChatHandler = () => {
-        fetch('http://localhost:3000/rooms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({name: 'gaming'})
-        })
-            .then(res => res.json())
-            .then(data => addRoom(data))
+    const [value, setValue] = useState('');
 
+    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value);
+
+    }
+
+    const addChatHandler = () => {
+        if (value.trim() !== '') {
+            fetch('http://localhost:3000/rooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: value})
+            })
+                .then(res => res.json())
+                .then(data => addRoom(data))
+        }
+        setValue('');
     }
 
     return (
@@ -34,6 +45,7 @@ export const SideBar = ({rooms, setActiveRoom, addRoom}: SideBarType) => {
                     )
                 })}
             </ul>
+            <input type="text" value={value} onChange={onChangeInputHandler}/>
             <button onClick={addChatHandler}>New chat</button>
         </div>
     );
