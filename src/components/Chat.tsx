@@ -14,6 +14,20 @@ export const Chat = () => {
     const [activeRoom, setActiveRoom] = useState<number | null>(null);
 
     useEffect(() => {
+        if(activeRoom === null) {
+            return;
+        } else {
+            fetch(`http://localhost:3000/rooms/${activeRoom}/messages`)
+                .then(res => res.json())
+                .then(data => {
+                    setMessages(data);
+                })
+        }
+
+        },[activeRoom]);
+
+
+    useEffect(() => {
         fetch('http://localhost:3000/rooms')
             .then(res => res.json())
             .then(data => {
@@ -45,8 +59,8 @@ export const Chat = () => {
                          addRoom={(room) => {
                              setRooms(prev => [...prev, room]);
                          }} deleteRoom={deleteRoom}/>
-            <ChatInput addMessage={(msg) => {
-                setMessages(prev => [...prev, {id: Date.now(), roomId: activeRoom, text: msg}]);
+            <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
+                setMessages(prev => [...prev, msg]);
             }}/>
         </div>
     );
