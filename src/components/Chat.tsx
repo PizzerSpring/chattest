@@ -14,6 +14,7 @@ export const Chat = () => {
     ]);
     const [rooms, setRooms] = useState<RoomType[]>([]);
     const [activeRoom, setActiveRoom] = useState<number | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (activeRoom === null) {
@@ -63,6 +64,7 @@ export const Chat = () => {
     }
 
     const addChatHandler = (roomName: string) => {
+        setError(null)
         if (roomName.trim() !== '') {
             fetch('http://localhost:3000/rooms', {
                 method: 'POST',
@@ -76,6 +78,9 @@ export const Chat = () => {
                     setRooms(prev => [...prev, data])
 
                 })
+                .catch(err => {
+                    setError('Не удалось создать комнату. Проверьте подключение к серверу')
+                })
 
         }
     }
@@ -86,6 +91,7 @@ export const Chat = () => {
             <Header/>
             <div className={stylesC.flexContainer}>
                 <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom}/>
+                {error && <div>{error}</div>}
                 <MessageList activeRoom={activeRoom}  messages={messages}/>
             </div>
             <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
