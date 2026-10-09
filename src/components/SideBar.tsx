@@ -25,12 +25,7 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom}: SideBarType
     }
 
     const deleteChatHandler = (roomId: number) => {
-        fetch(`http://localhost:3000/rooms/${roomId}`,  {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(data => deleteRoom(roomId))
-
+        deleteRoom(roomId);
     }
 
     return (

@@ -45,13 +45,21 @@ export const Chat = () => {
 
     const deleteRoom = (roomId: number) => {
 
-        const roomIndex = rooms.findIndex(r => r.id === roomId);
+        fetch(`http://localhost:3000/rooms/${roomId}`,  {
+            method: 'DELETE',
+        })
+            .then(res => res.json())
+            .then(data => {
+                const roomIndex = rooms.findIndex(r => r.id === roomId);
 
-        if (roomId === activeRoom) {
-            setActiveRoom(rooms[roomIndex + 1]?.id || rooms[roomIndex - 1]?.id || null);
-        }
-        const filteredRooms = rooms.filter(r => r.id !== roomId);
-        setRooms(filteredRooms);
+                if (roomId === activeRoom) {
+                    setActiveRoom(rooms[roomIndex + 1]?.id || rooms[roomIndex - 1]?.id || null);
+                }
+                const filteredRooms = rooms.filter(r => r.id !== roomId);
+                setRooms(filteredRooms);
+
+            })
+
     }
 
     const addChatHandler = (roomName: string) => {
@@ -72,13 +80,13 @@ export const Chat = () => {
         }
     }
 
+
     return (
         <div className={`${styles.brd} ${styles.flexContainer}`}>
             <Header/>
             <div className={stylesC.flexContainer}>
                 <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom}/>
-                <MessageList activeRoom={activeRoom} setActiveRoom={setActiveRoom} messages={messages} rooms={rooms}
-                             deleteRoom={deleteRoom}/>
+                <MessageList activeRoom={activeRoom}  messages={messages}/>
             </div>
             <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
                 setMessages(prev => [...prev, msg]);
