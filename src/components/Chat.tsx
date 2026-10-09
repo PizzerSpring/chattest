@@ -20,10 +20,20 @@ export const Chat = () => {
         if (activeRoom === null) {
             return;
         } else {
+            setError(null)
             fetch(`http://localhost:3000/rooms/${activeRoom}/messages`)
-                .then(res => res.json())
+                .then(res => {
+                    if(!res.ok) {
+                        throw new Error('Ошибка ответа от сервера');
+                    } return res.json()
+                })
                 .then(data => {
                     setMessages(data);
+                })
+                .catch(err => {
+                    setMessages([])
+                    setError('Не удалось загрузить сообщения')
+                    console.error(err)
                 })
         }
 
@@ -31,21 +41,31 @@ export const Chat = () => {
 
 
     useEffect(() => {
+        setError(null)
         fetch('http://localhost:3000/rooms')
-            .then(res => res.json())
+            .then(res => {
+                if(!res.ok) {
+                    throw new Error('Ошибка ответа от сервера');
+                } return res.json()
+            })
             .then(data => {
+                setRooms(data);
                 if (data.length !== 0) {
-                    setRooms(data);
                     setActiveRoom(data[0].id)
                 } else {
                     setActiveRoom(null)
                 }
-            });
+            })
+            .catch(err => {
+                setRooms([])
+                setError('Не удалось загрузить комнаты')
+                console.error(err)
+            })
 
     }, []);
 
     const deleteRoom = (roomId: number) => {
-
+        setError(null)
         fetch(`http://localhost:3000/rooms/${roomId}`,  {
             method: 'DELETE',
         })
