@@ -6,7 +6,7 @@ import {ChangeEvent} from "react";
 type SideBarType = {
     rooms: RoomType[]
     setActiveRoom: (roomId: number) => void
-    addRoom: (room: RoomType) => void
+    addRoom: (roomName: string) => void
     deleteRoom: (roomId: number) => void
 }
 
@@ -20,18 +20,8 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom}: SideBarType
     }
 
     const addChatHandler = () => {
-        if (value.trim() !== '') {
-            fetch('http://localhost:3000/rooms', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({name: value})
-            })
-                .then(res => res.json())
-                .then(data => addRoom(data))
-            setValue('');
-        }
+        addRoom(value);
+        setValue('');
     }
 
     const deleteChatHandler = (roomId: number) => {
