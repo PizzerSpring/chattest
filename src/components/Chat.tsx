@@ -49,7 +49,11 @@ export const Chat = () => {
         fetch(`http://localhost:3000/rooms/${roomId}`,  {
             method: 'DELETE',
         })
-            .then(res => res.json())
+            .then(res => {
+                if(!res.ok) {
+                    throw new Error('Ошибка ответа от сервера');
+                } return res.json()
+            })
             .then(data => {
                 const roomIndex = rooms.findIndex(r => r.id === roomId);
 
@@ -59,6 +63,10 @@ export const Chat = () => {
                 const filteredRooms = rooms.filter(r => r.id !== roomId);
                 setRooms(filteredRooms);
 
+            })
+            .catch(err => {
+                setError('Не удалось удалить комнату. Проверьте подключение к серверу')
+                console.error(err)
             })
 
     }
@@ -73,13 +81,18 @@ export const Chat = () => {
                 },
                 body: JSON.stringify({name: roomName})
             })
-                .then(res => res.json())
+                .then(res => {
+                    if(!res.ok) {
+                        throw new Error('Ошибка ответа от сервера');
+                    } return res.json()
+                })
                 .then(data => {
                     setRooms(prev => [...prev, data])
 
                 })
                 .catch(err => {
                     setError('Не удалось создать комнату. Проверьте подключение к серверу')
+                    console.error(err)
                 })
 
         }
