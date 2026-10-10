@@ -133,7 +133,7 @@ export const Chat = () => {
         <div className={`${styles.brd} ${styles.flexContainer}`}>
             <Header/>
             <div className={stylesC.flexContainer}>
-                <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom}/>
+                <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom} activeRoom={activeRoom}/>
                 {error && <div>{error}</div>}
                 <MessageList activeRoom={activeRoom}  messages={messages}/>
             </div>

@@ -2,15 +2,17 @@ import styles from './SideBar.module.css'
 import type {RoomType} from "../types";
 import {useState} from "react";
 import {ChangeEvent} from "react";
+import {Room} from "./Room";
 
 type SideBarType = {
     rooms: RoomType[]
+    activeRoom: number | null
     setActiveRoom: (roomId: number) => void
     addRoom: (roomName: string) => void
     deleteRoom: (roomId: number) => void
 }
 
-export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom}: SideBarType) => {
+export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}: SideBarType) => {
 
     const [value, setValue] = useState('');
 
@@ -34,10 +36,7 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom}: SideBarType
                 {rooms.map(r => {
                     return (
                         <div key={r.id}>
-                        <li onClick={() => {
-                            setActiveRoom(r.id);
-
-                        }}>{r.name}</li>
+                            <Room name={r.name} roomId={r.id} setActiveRoom={setActiveRoom} activeRoom={activeRoom}/>
                         <button onClick={() => {
                             deleteChatHandler(r.id);
                         }}>X</button>
