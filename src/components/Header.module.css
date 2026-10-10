@@ -3,6 +3,9 @@
     justify-content: space-evenly;
     align-items: center;
     padding: 10px;
-    background: blanchedalmond;
+    background: linear-gradient(135deg, #f5deb3, #e6c280);
     height: 50px;
+    color:  #4a3419;
+    font-weight: bold;
+    font-size: 25px;
 }

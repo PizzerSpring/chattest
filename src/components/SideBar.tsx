@@ -36,10 +36,10 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
                 {rooms.map(r => {
                     return (
                         <div key={r.id}>
-                            <Room name={r.name} roomId={r.id} setActiveRoom={setActiveRoom} activeRoom={activeRoom}/>
-                        <button onClick={() => {
+                            <Room name={r.name} roomId={r.id} setActiveRoom={setActiveRoom} activeRoom={activeRoom} deleteRoom={deleteRoom}/>
+                        {/*<button onClick={() => {
                             deleteChatHandler(r.id);
-                        }}>X</button>
+                        }}>X</button>*/}
                         </div>
                     )
                 })}
