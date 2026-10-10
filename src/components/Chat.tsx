@@ -17,11 +17,15 @@ export const Chat = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        setMessages([])
         if (activeRoom === null) {
             return;
         } else {
+            const controller = new AbortController();
             setError(null)
-            fetch(`http://localhost:3000/rooms/${activeRoom}/messages`)
+            fetch(`http://localhost:3000/rooms/${activeRoom}/messages`, {
+                signal: controller.signal
+            })
                 .then(res => {
                     if(!res.ok) {
                         throw new Error('Ошибка ответа от сервера');
@@ -31,10 +35,16 @@ export const Chat = () => {
                     setMessages(data);
                 })
                 .catch(err => {
+                    if (err.name === 'AbortError') {
+                        return;
+                    }
                     setMessages([])
                     setError('Не удалось загрузить сообщения')
                     console.error(err)
                 })
+            return () => {
+                controller.abort();
+            }
         }
 
     }, [activeRoom]);
