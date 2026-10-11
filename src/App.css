@@ -6,6 +6,22 @@
     font-display: swap; /* Предотвращает невидимый текст при загрузке */
 }
 
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('./assets/fonts/SegoeUISemibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap; /* Предотвращает невидимый текст при загрузке */
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('./assets/fonts/SegoeUIBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap; /* Предотвращает невидимый текст при загрузке */
+}
+
 * {
     margin: 0;
     padding: 0;
