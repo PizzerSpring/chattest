@@ -1,7 +1,16 @@
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('./assets/fonts/SegoeUI.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Предотвращает невидимый текст при загрузке */
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     list-style-type: none;
+    font-family: 'Segoe UI', sans-serif;
 }
 
