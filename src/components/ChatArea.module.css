@@ -1,0 +1,6 @@
+.chatArea {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    background-color: #F7F4EF
+}

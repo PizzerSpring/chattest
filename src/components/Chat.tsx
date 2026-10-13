@@ -6,6 +6,7 @@ import styles from './Chat.module.css';
 import {Header} from "./Header";
 import {SideBar} from "./SideBar";
 import {ChatScreen} from "./ChatScreen";
+import {CharArea} from "./CharArea";
 
 export const Chat = () => {
     const [messages, setMessages] = useState<MessageType[]>([
@@ -27,9 +28,10 @@ export const Chat = () => {
                 signal: controller.signal
             })
                 .then(res => {
-                    if(!res.ok) {
+                    if (!res.ok) {
                         throw new Error('Ошибка ответа от сервера');
-                    } return res.json()
+                    }
+                    return res.json()
                 })
                 .then(data => {
                     setMessages(data);
@@ -54,9 +56,10 @@ export const Chat = () => {
         setError(null)
         fetch('http://localhost:3000/rooms')
             .then(res => {
-                if(!res.ok) {
+                if (!res.ok) {
                     throw new Error('Ошибка ответа от сервера');
-                } return res.json()
+                }
+                return res.json()
             })
             .then(data => {
                 setRooms(data);
@@ -76,13 +79,14 @@ export const Chat = () => {
 
     const deleteRoom = (roomId: number) => {
         setError(null)
-        fetch(`http://localhost:3000/rooms/${roomId}`,  {
+        fetch(`http://localhost:3000/rooms/${roomId}`, {
             method: 'DELETE',
         })
             .then(res => {
-                if(!res.ok) {
+                if (!res.ok) {
                     throw new Error('Ошибка ответа от сервера');
-                } return res.json()
+                }
+                return res.json()
             })
             .then(data => {
                 const roomIndex = rooms.findIndex(r => r.id === roomId);
@@ -112,9 +116,10 @@ export const Chat = () => {
                 body: JSON.stringify({name: roomName})
             })
                 .then(res => {
-                    if(!res.ok) {
+                    if (!res.ok) {
                         throw new Error('Ошибка ответа от сервера');
-                    } return res.json()
+                    }
+                    return res.json()
                 })
                 .then(data => {
                     setRooms(prev => [...prev, data])
@@ -133,13 +138,16 @@ export const Chat = () => {
         <div className={styles.chat}>
             <Header/>
             <ChatScreen>
-                <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom} activeRoom={activeRoom}/>
+                <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom}
+                         activeRoom={activeRoom}/>
                 {error && <div>{error}</div>}
-                <MessageList activeRoom={activeRoom}  messages={messages}/>
+                <CharArea>
+                    <MessageList activeRoom={activeRoom} messages={messages}/>
+                    <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
+                        setMessages(prev => [...prev, msg]);
+                    }}/>
+                </CharArea>
             </ChatScreen>
-            <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
-                setMessages(prev => [...prev, msg]);
-            }}/>
         </div>
     );
 };
