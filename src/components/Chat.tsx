@@ -5,7 +5,6 @@ import type {MessageType, RoomType} from "../types";
 import styles from './Chat.module.css';
 import {Header} from "./Header";
 import {SideBar} from "./SideBar";
-import stylesC from './MessageList.module.css';
 import {ChatScreen} from "./ChatScreen";
 
 export const Chat = () => {
@@ -131,7 +130,7 @@ export const Chat = () => {
 
 
     return (
-        <div className={`${styles.brd} ${styles.flexContainer}`}>
+        <div className={styles.chat}>
             <Header/>
             <ChatScreen>
                 <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom} activeRoom={activeRoom}/>

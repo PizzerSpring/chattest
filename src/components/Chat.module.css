@@ -1,12 +1,11 @@
-.brd {
-    border: 1px solid black;
-    min-height: 100vh;
-}
-
-.flexContainer {
+.chat {
+    background-color: #F7F4EF;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    min-height: 100vh;
+    color: #332A24;
 }
+
+
 
 
