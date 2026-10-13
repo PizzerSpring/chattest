@@ -47,11 +47,10 @@ export const ChatInput = ({addMessage, activeRoom}: ChatInputType) => {
     }
 
     return (
-        <div className={`${styles.flexContainer} ${styles.footer}`}>
-
-            <input className={styles.flexGrowInp} type="text" disabled={disabledSend} value={value}
+        <div className={styles.chatInput}>
+            <input className={styles.chatInput} type="text" placeholder='Напишите сообщение...' disabled={disabledSend} value={value}
                    onChange={onChangeHandler} onKeyPress={onEnterKeyPressHandler}/>
-            <button className={styles.btn} disabled={disabledSend} onClick={addMessageHandler}>Send</button>
+            <button className={styles.chatInput} disabled={disabledSend} onClick={addMessageHandler}>Отправить</button>
         </div>
     );
 };

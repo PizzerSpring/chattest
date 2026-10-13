@@ -1,18 +1,43 @@
-.flexContainer {
+.chatInput {
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-top: 1px solid #EAE3D2;
     display: flex;
-    justify-content: space-evenly;
+    gap: 12px;
+    align-items: center;
 }
 
-.footer {
-    background: linen;
-    height: 50px;
-    padding: 10px;
+.chatInput input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 1.5px solid #EAE3D2;
+    border-radius: 25px;
+    outline: none;
+    font-size: 0.95rem;
+    background-color: #FBFBFA;
+    transition: border-color 0.2s;
 }
 
-.flexGrowInp {
-    flex-grow: 1;
+.chatInput input:focus {
+    border-color: #D97443;
 }
 
-.btn {
-    width: 200px;
+.chatInput button {
+    background-color: #D97443;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.chatInput button:hover {
+    background-color: #8C3B23;
+}
+
+.chatInput button:active {
+    transform: scale(0.97);
 }
