@@ -6,6 +6,7 @@ import styles from './Chat.module.css';
 import {Header} from "./Header";
 import {SideBar} from "./SideBar";
 import stylesC from './MessageList.module.css';
+import {ChatScreen} from "./ChatScreen";
 
 export const Chat = () => {
     const [messages, setMessages] = useState<MessageType[]>([
@@ -132,11 +133,11 @@ export const Chat = () => {
     return (
         <div className={`${styles.brd} ${styles.flexContainer}`}>
             <Header/>
-            <div className={stylesC.flexContainer}>
+            <ChatScreen>
                 <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom} activeRoom={activeRoom}/>
                 {error && <div>{error}</div>}
                 <MessageList activeRoom={activeRoom}  messages={messages}/>
-            </div>
+            </ChatScreen>
             <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
                 setMessages(prev => [...prev, msg]);
             }}/>
