@@ -31,22 +31,18 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
     }
 
     return (
-        <div className={styles.bg}>
+        <aside className={styles.roomsSidebar}>
             <ul>
                 {rooms.map(r => {
                     return (
-                        <div key={r.id}>
-                            <Room name={r.name} roomId={r.id} setActiveRoom={setActiveRoom} activeRoom={activeRoom} deleteRoom={deleteRoom}/>
-                        {/*<button onClick={() => {
-                            deleteChatHandler(r.id);
-                        }}>X</button>*/}
-                        </div>
+                        <Room key={r.id} name={r.name} roomId={r.id} setActiveRoom={setActiveRoom}
+                              activeRoom={activeRoom} deleteRoom={deleteRoom}/>
                     )
                 })}
             </ul>
             <input type="text" value={value} onChange={onChangeInputHandler}/>
             <button onClick={addChatHandler}>New chat</button>
-        </div>
+        </aside>
     );
 };
 

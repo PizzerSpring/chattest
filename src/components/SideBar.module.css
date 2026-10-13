@@ -1,4 +1,21 @@
-.bg {
-    background: #ffffff;
-    width: 250px;
+.roomsSidebar {
+    width: 25%;
+    min-width: 240px;
+    background-color: #8C3B23;
+    color: #F7F4EF;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.roomsSidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+    /* Скрываем полосу прокрутки для Firefox */
+    scrollbar-width: none;
 }
