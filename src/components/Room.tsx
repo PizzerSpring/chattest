@@ -12,7 +12,7 @@ type RoomPropsType = {
 export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: RoomPropsType) => {
     const [activeMenu, setActiveMenu] = useState(false);
     return (
-        <>
+        <li>
             <button onContextMenu={(e) => {
                 e.preventDefault();
                 setActiveMenu(!activeMenu);
@@ -27,7 +27,7 @@ export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: Room
                 }
                 }>Удалить комнату</div>
             }
-        </>
+        </li>
     )
         ;
 };

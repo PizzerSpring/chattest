@@ -1,13 +1,20 @@
 .roomButton {
-    background: #F9F1CC;
-    border-radius: 10px;
-    margin: 20px 20px;
-    width: 200px;
-    padding: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    display: block;
+    width: 100%;
 }
 
+.roomButton:hover {
+    background: #D97443;
+    color: white;
+}
 
 .roomButtonActive {
-    background: #EEDC82;
+    background-color: #D97443;
+    color: white;
 }
