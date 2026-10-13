@@ -1,8 +1,9 @@
-.flexContainer {
+.messagesList {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
     display: flex;
-    flex-grow: 1;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.flxGrowMsg {
-    flex-grow: 1;
-}

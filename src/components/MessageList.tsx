@@ -11,7 +11,7 @@ export const MessageList = ({messages, activeRoom}: MessageListType) => {
     const filteredMessages = messages.filter(msg => msg.roomId === activeRoom);
 
     return (
-        <ul>
+        <ul className={styles.messagesList}>
             {filteredMessages.map((msg) => {
                 return (
                     <li key={msg.id}>{msg.text}</li>
