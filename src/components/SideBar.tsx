@@ -40,8 +40,8 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
                     )
                 })}
             </ul>
-            <input type="text" value={value} onChange={onChangeInputHandler}/>
-            <button onClick={addChatHandler}>New chat</button>
+           {/* <input type="text" value={value} onChange={onChangeInputHandler}/>*/}
+            <button className={styles.roomsSidebar} onClick={addChatHandler}>Добавить комнату</button>
         </aside>
     );
 };

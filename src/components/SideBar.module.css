@@ -19,3 +19,25 @@
     /* Скрываем полосу прокрутки для Firefox */
     scrollbar-width: none;
 }
+
+.roomsSidebar > button {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #F7F4EF;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+}
+
+.roomsSidebar > button:hover {
+    background-color: #F7F4EF;
+    color: #8C3B23;
+    border-style: solid;
+    border-color: #F7F4EF;
+}
