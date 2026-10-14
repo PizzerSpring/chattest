@@ -1,5 +1,6 @@
 import {useRef} from "react";
 import {useEffect} from "react";
+import styles from './RoomContextMenu.module.css';
 
 type RoomContextMenuPropsType = {
     roomId: number
@@ -23,7 +24,7 @@ export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPr
     }
 
     return (
-        <div tabIndex={0} ref={menuRef} onClick={handleDelete} onBlur={onClose}>
+        <div className={styles.deleteRoomMenu} tabIndex={0} ref={menuRef} onClick={handleDelete} onBlur={onClose}>
             Удалить комнату
         </div>
     );
