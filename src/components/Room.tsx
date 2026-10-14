@@ -1,5 +1,6 @@
 import styles from './Room.module.css'
 import {useEffect, useRef, useState} from "react";
+import {RoomContextMenu} from "./RoomContextMenu";
 
 type RoomPropsType = {
     name: string
@@ -11,14 +12,7 @@ type RoomPropsType = {
 
 export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: RoomPropsType) => {
     const [activeMenu, setActiveMenu] = useState(false);
-    const menuRef = useRef(null);
 
-    useEffect(() => {
-          if(activeMenu && menuRef.current) {
-              menuRef.current.focus();
-          }
-        },
-        [activeMenu])
     return (
         <li>
             <button onContextMenu={(e) => {
@@ -29,18 +23,14 @@ export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: Room
             }} className={`${styles.roomButton} ${roomId === activeRoom ? styles.roomButtonActive : ''}`}>
                 <span>{name}</span>
             </button>
-            {
-                activeMenu && <div tabIndex={0} ref={menuRef} onClick={(e) => {
-                    e.stopPropagation();
-                    deleteRoom(roomId);
+            {activeMenu &&
+                <RoomContextMenu roomId={roomId} deleteRoom={deleteRoom} onClose={() => {
                     setActiveMenu(false);
                 }
-                } onBlur={() => {
-                    setActiveMenu(false);
-                }}>Удалить комнату</div>
+                }/>
             }
         </li>
     )
-        ;
+
 };
 
