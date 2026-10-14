@@ -10,14 +10,17 @@ type RoomContextMenuPropsType = {
 
 export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPropsType) => {
 
-    const menuRef = useRef(null);
+    const menuRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-          menuRef.current.focus();
+        const menuElement = menuRef.current;
+        if(menuElement) {
+            menuElement.focus();
+        }
         },
         [])
 
-    const handleDelete = (e) => {
+    const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         deleteRoom(roomId);
         onClose();
