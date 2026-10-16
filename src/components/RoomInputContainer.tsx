@@ -1,4 +1,5 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
+import styles from './RoomInputContainer.module.css';
 
 type RoomInputContainerPropsType = {
     addRoom: (roomName: string) => void
@@ -27,7 +28,7 @@ export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsTy
         }
     }
     return (
-        <div>
+        <div className={styles.roomInputContainer}>
             <input type="text" value={value} onChange={onChangeInputHandler}
                    onKeyDown={addChatEnterHandler}/>
             <button onClick={addChatHandler}>+</button>
