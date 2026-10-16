@@ -1,9 +1,8 @@
-import {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 import styles from './ChatInput.module.css';
-import type {MessageType} from "../types";
 
 type ChatInputType = {
-    addMessage: (message: MessageType) => void
+    addMessage: (message: string) => void
     activeRoom: number | null
 }
 
@@ -17,26 +16,8 @@ export const ChatInput = ({addMessage, activeRoom}: ChatInputType) => {
     }
 
     const addMessageHandler = () => {
-        if (activeRoom === null) {
-            return;
-        } else {
-            if (value.trim() !== '') {
-                fetch(`http://localhost:3000/rooms/${activeRoom}/messages`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({text: value})
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        addMessage(data);
-                        setValue('');
-
-                    })
-            }
-        }
-
+        addMessage(value);
+        setValue('');
     }
 
     const onEnterKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {

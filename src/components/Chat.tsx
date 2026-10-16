@@ -133,6 +133,24 @@ export const Chat = () => {
         }
     }
 
+    const addMessageHandler = (messageText: string) => {
+        const trimmedMessageText = messageText.trim();
+        if (activeRoom === null || trimmedMessageText === '') {
+            return;
+        }
+        fetch(`http://localhost:3000/rooms/${activeRoom}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({text: trimmedMessageText})
+        })
+            .then(res => res.json())
+            .then(data => {
+                setMessages(prev => [...prev, data])
+            })
+    }
+
 
     return (
         <div className={styles.chat}>
@@ -143,9 +161,7 @@ export const Chat = () => {
                 {error && <div>{error}</div>}
                 <CharArea>
                     <MessageList activeRoom={activeRoom} messages={messages}/>
-                    <ChatInput activeRoom={activeRoom} addMessage={(msg) => {
-                        setMessages(prev => [...prev, msg]);
-                    }}/>
+                    <ChatInput activeRoom={activeRoom} addMessage={addMessageHandler}/>
                 </CharArea>
             </ChatScreen>
         </div>
