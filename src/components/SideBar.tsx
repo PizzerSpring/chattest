@@ -1,7 +1,7 @@
 import styles from './SideBar.module.css'
 import type {RoomType} from "../types";
 import {useState} from "react";
-import {ChangeEvent} from "react";
+import {KeyboardEvent, ChangeEvent} from "react";
 import {Room} from "./Room";
 
 type SideBarType = {
@@ -16,17 +16,25 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
 
     const [value, setValue] = useState('');
     const [isValueActive, setIsValueActive] = useState(false);
-    const [isButtonActive, setIsButtonActive] = useState(true);
+
 
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value);
     }
 
     const addChatHandler = () => {
-        addRoom(value);
+        const trimmedValue = value.trim();
+        if(trimmedValue !== '') {
+            addRoom(trimmedValue);
+            setIsValueActive(false);
+        }
         setValue('');
-        setIsButtonActive(true);
-        setIsValueActive(false);
+    }
+
+    const addChatEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            addChatHandler();
+        }
     }
 
 
@@ -40,15 +48,17 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
                     )
                 })}
             </ul>
-            {isValueActive && <div>
-                <input type="text" value={value} onChange={onChangeInputHandler}/>
-                <button onClick={addChatHandler}>+</button>
-            </div>}
-            {isButtonActive && <button className={styles.roomsSidebar} onClick={() => {
-                setIsValueActive(true);
-                setIsButtonActive(false);
-            }}>Добавить комнату</button>}
+            {isValueActive ?
+                <div>
+                    <input type="text" value={value} onChange={onChangeInputHandler}
+                    onKeyPress={addChatEnterHandler}/>
+                    <button onClick={addChatHandler}>+</button>
+                </div> :
+                <button className={styles.roomsSidebar} onClick={() => {
+                    setIsValueActive(true);
+                }}>Добавить комнату</button>}
         </aside>
     );
 };
+
 
