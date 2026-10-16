@@ -1,8 +1,8 @@
 import styles from './SideBar.module.css'
 import type {RoomType} from "../types";
 import {useState} from "react";
-import {KeyboardEvent, ChangeEvent} from "react";
 import {Room} from "./Room";
+import {RoomInputContainer} from "./RoomInputContainer";
 
 type SideBarType = {
     rooms: RoomType[]
@@ -14,28 +14,7 @@ type SideBarType = {
 
 export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}: SideBarType) => {
 
-    const [value, setValue] = useState('');
     const [isValueActive, setIsValueActive] = useState(false);
-
-
-    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value);
-    }
-
-    const addChatHandler = () => {
-        const trimmedValue = value.trim();
-        if(trimmedValue !== '') {
-            addRoom(trimmedValue);
-            setIsValueActive(false);
-        }
-        setValue('');
-    }
-
-    const addChatEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addChatHandler();
-        }
-    }
 
 
     return (
@@ -49,11 +28,10 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
                 })}
             </ul>
             {isValueActive ?
-                <div>
-                    <input type="text" value={value} onChange={onChangeInputHandler}
-                    onKeyPress={addChatEnterHandler}/>
-                    <button onClick={addChatHandler}>+</button>
-                </div> :
+                <RoomInputContainer addRoom={addRoom} onClose={() => {
+                setIsValueActive(false)}
+                }/>
+                 :
                 <button className={styles.roomsSidebar} onClick={() => {
                     setIsValueActive(true);
                 }}>Добавить комнату</button>}
