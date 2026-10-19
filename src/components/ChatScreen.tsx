@@ -6,7 +6,7 @@ type ChatScreenType = {
 
 export const ChatScreen = ({children}: ChatScreenType) => {
     return (
-        <div className={styles.mainСontainer}>
+        <div className={styles.mainContainer}>
             {children}
         </div>
     );
