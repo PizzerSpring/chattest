@@ -1,5 +1,5 @@
 import styles from './Room.module.css'
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import {RoomContextMenu} from "./RoomContextMenu";
 
 type RoomPropsType = {

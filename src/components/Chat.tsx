@@ -87,7 +87,7 @@ export const Chat = () => {
                 }
                 return res.json()
             })
-            .then(data => {
+            .then(() => {
                 const roomIndex = rooms.findIndex(r => r.id === roomId);
 
                 if (roomId === activeRoom) {

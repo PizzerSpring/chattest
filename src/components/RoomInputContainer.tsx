@@ -1,4 +1,4 @@
-import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {type ChangeEvent,type KeyboardEvent, useState} from "react";
 import styles from './RoomInputContainer.module.css';
 
 type RoomInputContainerPropsType = {
@@ -12,7 +12,6 @@ export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsTy
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value);
     }
-    const testCheck: number = "строка";
 
     const addChatHandler = () => {
         const trimmedValue = value.trim();
