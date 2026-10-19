@@ -12,6 +12,7 @@ export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsTy
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value);
     }
+    const testCheck: number = "строка";
 
     const addChatHandler = () => {
         const trimmedValue = value.trim();

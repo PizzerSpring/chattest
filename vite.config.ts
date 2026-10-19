@@ -1,7 +1,18 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
+import checker from 'vite-plugin-checker'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+    plugins: [
+        react(),
+        checker({
+                typescript: true,
+                eslint: {
+                    useFlatConfig: true, // Включаем поддержку нового формата eslint.config.js
+                    lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+                },
+            },
+        ),
+    ],
 })

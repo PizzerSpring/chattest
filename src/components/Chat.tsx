@@ -51,7 +51,6 @@ export const Chat = () => {
 
     }, [activeRoom]);
 
-
     useEffect(() => {
         setError(null)
         fetch('http://localhost:3000/rooms')
