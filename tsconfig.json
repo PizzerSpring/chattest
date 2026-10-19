@@ -15,7 +15,8 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react-jsxdev",
+    "jsx": "react-jsx",          // Критически важно для React 17/18/19
+    "jsxImportSource": "react",
 
     /* Linting */
     "noUnusedLocals": true,

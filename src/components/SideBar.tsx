@@ -3,6 +3,7 @@ import type {RoomType} from "../types";
 import {useState} from "react";
 import {Room} from "./Room";
 import {RoomInputContainer} from "./RoomInputContainer";
+import type {JSX} from "react";
 
 type SideBarType = {
     rooms: RoomType[]
@@ -12,7 +13,7 @@ type SideBarType = {
     deleteRoom: (roomId: number) => void
 }
 
-export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}: SideBarType) => {
+export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}: SideBarType): JSX.Element => {
 
     const [isValueActive, setIsValueActive] = useState(false);
 

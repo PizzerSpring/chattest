@@ -1,6 +1,7 @@
 import styles from './Room.module.css'
 import {useState} from "react";
 import {RoomContextMenu} from "./RoomContextMenu";
+import type {JSX} from "react";
 
 type RoomPropsType = {
     name: string
@@ -10,7 +11,7 @@ type RoomPropsType = {
     deleteRoom: (roomId: number) => void
 }
 
-export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: RoomPropsType) => {
+export const Room = ({name, activeRoom, setActiveRoom, roomId, deleteRoom}: RoomPropsType): JSX.Element => {
     const [activeMenu, setActiveMenu] = useState(false);
 
     return (

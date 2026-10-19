@@ -1,12 +1,13 @@
 import {type ChangeEvent,type KeyboardEvent, useState} from "react";
 import styles from './RoomInputContainer.module.css';
+import type {JSX} from "react";
 
 type RoomInputContainerPropsType = {
     addRoom: (roomName: string) => void
     onClose: () => void
 }
 
-export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsType) => {
+export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsType): JSX.Element => {
     const [value, setValue] = useState('');
 
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {

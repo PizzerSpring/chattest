@@ -7,8 +7,9 @@ import {Header} from "./Header";
 import {SideBar} from "./SideBar";
 import {ChatScreen} from "./ChatScreen";
 import {CharArea} from "./CharArea";
+import type {JSX} from "react";
 
-export const Chat = () => {
+export const Chat = (): JSX.Element => {
     const [messages, setMessages] = useState<MessageType[]>([
         {id: 1, roomId: 2, text: 'hello'},
         {id: 2, roomId: 1, text: 'how are you'}

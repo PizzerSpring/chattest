@@ -1,6 +1,7 @@
 import {useRef} from "react";
 import {useEffect} from "react";
 import styles from './RoomContextMenu.module.css';
+import type {JSX} from "react";
 
 type RoomContextMenuPropsType = {
     roomId: number
@@ -8,7 +9,7 @@ type RoomContextMenuPropsType = {
     onClose: () => void
 }
 
-export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPropsType) => {
+export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPropsType): JSX.Element => {
 
     const menuRef = useRef<HTMLDivElement | null>(null);
 

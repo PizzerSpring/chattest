@@ -1,12 +1,13 @@
 import {type ChangeEvent,type KeyboardEvent, useState} from "react";
 import styles from './ChatInput.module.css';
+import type {JSX} from "react";
 
 type ChatInputType = {
     addMessage: (message: string) => void
     activeRoom: number | null
 }
 
-export const ChatInput = ({addMessage, activeRoom}: ChatInputType) => {
+export const ChatInput = ({addMessage, activeRoom}: ChatInputType): JSX.Element => {
     const [value, setValue] = useState('');
 
     const disabledSend = activeRoom === null;
