@@ -1,5 +1,6 @@
 .deleteRoomMenu {
     text-align: center;
+    width: 100%;
     padding: 10px 20px;
     background-color: #d97706; /* Теплый тыквенный */
     color: #fef3c7; /* Мягкий кремово-желтый текст */

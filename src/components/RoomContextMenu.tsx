@@ -1,5 +1,4 @@
-import {useRef} from "react";
-import {useEffect} from "react";
+import {useRef, useEffect} from "react";
 import styles from './RoomContextMenu.module.css';
 import type {JSX} from "react";
 
@@ -11,7 +10,7 @@ type RoomContextMenuPropsType = {
 
 export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPropsType): JSX.Element => {
 
-    const menuRef = useRef<HTMLDivElement | null>(null);
+    const menuRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
         const menuElement = menuRef.current;
@@ -21,16 +20,16 @@ export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPr
         },
         [])
 
-    const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         deleteRoom(roomId);
         onClose();
     }
 
     return (
-        <div className={styles.deleteRoomMenu} tabIndex={0} ref={menuRef} onClick={handleDelete} onBlur={onClose}>
+        <button className={styles.deleteRoomMenu} tabIndex={0} ref={menuRef} onClick={handleDelete} onBlur={onClose}>
             Удалить комнату
-        </div>
+        </button>
     );
 };
 
