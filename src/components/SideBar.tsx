@@ -13,7 +13,7 @@ type SideBarType = {
     deleteRoom: (roomId: number) => void
 }
 
-export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}: SideBarType): JSX.Element => {
+export const SideBar = ({rooms, activeRoom, setActiveRoom, addRoom, deleteRoom}: SideBarType): JSX.Element => {
 
     const [isValueActive, setIsValueActive] = useState(false);
 
@@ -21,20 +21,18 @@ export const SideBar = ({rooms, setActiveRoom, addRoom, deleteRoom, activeRoom}:
     return (
         <aside className={styles.roomsSidebar}>
             <ul>
-                {rooms.map(r => {
-                    return (
-                        <Room key={r.id} name={r.name} roomId={r.id} setActiveRoom={setActiveRoom}
-                              activeRoom={activeRoom} deleteRoom={deleteRoom}/>
-                    )
-                })}
+                {rooms.map(r =>
+                    <Room key={r.id} name={r.name} roomId={r.id} setActiveRoom={setActiveRoom}
+                          activeRoom={activeRoom} deleteRoom={deleteRoom}/>)}
             </ul>
             {isValueActive ?
                 <RoomInputContainer addRoom={addRoom} onClose={() => {
-                setIsValueActive(false)}
+                    setIsValueActive(false)
+                }
                 }/>
-                 :
-                <button className={styles.roomsSidebar} onClick={() => {
-                    setIsValueActive(true);
+                :
+                <button onClick={() => {
+                    setIsValueActive(true)
                 }}>Добавить комнату</button>}
         </aside>
     );
