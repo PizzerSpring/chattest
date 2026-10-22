@@ -13,11 +13,9 @@ export const MessageList = ({messages, activeRoom}: MessageListType): JSX.Elemen
 
     return (
         <ul className={styles.messagesList}>
-            {filteredMessages.map((msg) => {
-                return (
-                    <li className={styles.messagesList} key={msg.id}>{msg.text}</li>
-                )
-            })}
+            {filteredMessages.map((msg) =>
+                    <li key={msg.id}>{msg.text}</li>
+             )}
         </ul>
     );
 };
