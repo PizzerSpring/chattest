@@ -30,7 +30,7 @@ export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsTy
     }
     return (
         <div className={styles.roomInputContainer}>
-            <input type="text" value={value} onChange={onChangeInputHandler}
+            <input type="text" value={value} placeholder="Название комнаты..." autoFocus onChange={onChangeInputHandler}
                    onKeyDown={addChatEnterHandler}/>
             <button onClick={addChatHandler}>+</button>
         </div>

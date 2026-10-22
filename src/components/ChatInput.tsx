@@ -1,4 +1,4 @@
-import {type ChangeEvent,type KeyboardEvent, useState} from "react";
+import {type ChangeEvent, type KeyboardEvent, useState} from "react";
 import styles from './ChatInput.module.css';
 import type {JSX} from "react";
 
