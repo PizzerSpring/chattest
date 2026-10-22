@@ -30,9 +30,9 @@ export const ChatInput = ({addMessage, activeRoom}: ChatInputType): JSX.Element 
 
     return (
         <div className={styles.chatInput}>
-            <input className={styles.chatInput} type="text" placeholder='Напишите сообщение...' disabled={disabledSend} value={value}
-                   onChange={onChangeHandler} onKeyPress={onEnterKeyPressHandler}/>
-            <button className={styles.chatInput} disabled={disabledSend} onClick={addMessageHandler}>Отправить</button>
+            <input type="text" placeholder='Напишите сообщение...' disabled={disabledSend} value={value}
+                   onChange={onChangeHandler} onKeyDown={onEnterKeyPressHandler}/>
+            <button disabled={disabledSend} onClick={addMessageHandler}>Отправить</button>
         </div>
     );
 };
