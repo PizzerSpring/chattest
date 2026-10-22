@@ -1,68 +1,62 @@
-import {MessageList} from "./MessageList";
-import {ChatInput} from "./ChatInput";
-import {useEffect, useState} from 'react';
-import type {MessageType, RoomType} from "../types";
-import styles from './Chat.module.css';
-import {Header} from "./Header";
-import {SideBar} from "./SideBar";
-import {ChatScreen} from "./ChatScreen";
-import {CharArea} from "./CharArea";
-import type {JSX} from "react";
+import {MessageList} from "./MessageList"
+import {ChatInput} from "./ChatInput"
+import {useEffect, useState} from 'react'
+import type {MessageType, RoomType} from "../types"
+import styles from './Chat.module.css'
+import {Header} from "./Header"
+import {SideBar} from "./SideBar"
+import {ChatScreen} from "./ChatScreen"
+import {CharArea} from "./CharArea"
+import type {JSX} from "react"
+
+const API_BASE_URL = "http://localhost:3000"
 
 export const Chat = (): JSX.Element => {
-    const [messages, setMessages] = useState<MessageType[]>([
-        {id: 1, roomId: 2, text: 'hello'},
-        {id: 2, roomId: 1, text: 'how are you'}
-    ]);
-    const [rooms, setRooms] = useState<RoomType[]>([]);
-    const [activeRoom, setActiveRoom] = useState<number | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [messages, setMessages] = useState<MessageType[]>([])
+    const [rooms, setRooms] = useState<RoomType[]>([])
+    const [activeRoom, setActiveRoom] = useState<number | null>(null)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
-        setMessages([])
         if (activeRoom === null) {
-            return;
-        } else {
-            const controller = new AbortController();
-            setError(null)
-            fetch(`http://localhost:3000/rooms/${activeRoom}/messages`, {
-                signal: controller.signal
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error('Ошибка ответа от сервера');
-                    }
-                    return res.json()
-                })
-                .then(data => {
-                    setMessages(data);
-                })
-                .catch(err => {
-                    if (err.name === 'AbortError') {
-                        return;
-                    }
-                    setMessages([])
-                    setError('Не удалось загрузить сообщения')
-                    console.error(err)
-                })
-            return () => {
-                controller.abort();
-            }
+            setMessages([])
+            return
         }
 
-    }, [activeRoom]);
-
-    useEffect(() => {
+        const controller = new AbortController()
         setError(null)
-        fetch('http://localhost:3000/rooms')
+
+        fetch(`${API_BASE_URL}/rooms/${activeRoom}/messages`, {
+            signal: controller.signal
+        })
             .then(res => {
-                if (!res.ok) {
-                    throw new Error('Ошибка ответа от сервера');
-                }
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
                 return res.json()
             })
             .then(data => {
-                setRooms(data);
+                setMessages(data)
+            })
+            .catch(err => {
+                if (err.name === 'AbortError') return
+                setMessages([])
+                setError('Не удалось загрузить сообщения')
+                console.error(err)
+            })
+        return () => {
+            controller.abort()
+        }
+
+    }, [activeRoom])
+
+    useEffect(() => {
+        setError(null)
+        fetch(`${API_BASE_URL}/rooms`)
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
+                return res.json()
+            })
+            .then(data => {
+                setRooms(data)
                 if (data.length !== 0) {
                     setActiveRoom(data[0].id)
                 } else {
@@ -75,28 +69,28 @@ export const Chat = (): JSX.Element => {
                 console.error(err)
             })
 
-    }, []);
+    }, [])
 
     const deleteRoom = (roomId: number) => {
         setError(null)
-        fetch(`http://localhost:3000/rooms/${roomId}`, {
+
+        fetch(`${API_BASE_URL}/rooms/${roomId}`, {
             method: 'DELETE',
         })
             .then(res => {
-                if (!res.ok) {
-                    throw new Error('Ошибка ответа от сервера');
-                }
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
                 return res.json()
             })
             .then(() => {
-                const roomIndex = rooms.findIndex(r => r.id === roomId);
-
-                if (roomId === activeRoom) {
-                    setActiveRoom(rooms[roomIndex + 1]?.id || rooms[roomIndex - 1]?.id || null);
-                }
-                const filteredRooms = rooms.filter(r => r.id !== roomId);
-                setRooms(filteredRooms);
-
+                setRooms(prev => {
+                    if (roomId === activeRoom) {
+                        const roomIndex = prev.findIndex(r => r.id === roomId)
+                        if (roomIndex !== -1) {
+                            setActiveRoom(prev[roomIndex + 1]?.id || prev[roomIndex - 1]?.id || null)
+                        }
+                    }
+                    return prev.filter(r => r.id !== roomId)
+                })
             })
             .catch(err => {
                 setError('Не удалось удалить комнату. Проверьте подключение к серверу')
@@ -106,19 +100,19 @@ export const Chat = (): JSX.Element => {
     }
 
     const addChatHandler = (roomName: string) => {
+        const trimmedRoomName = roomName.trim()
+        if(!trimmedRoomName) return
+
         setError(null)
-        if (roomName.trim() !== '') {
-            fetch('http://localhost:3000/rooms', {
+            fetch(`${API_BASE_URL}/rooms`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: roomName})
+                body: JSON.stringify({name: trimmedRoomName})
             })
                 .then(res => {
-                    if (!res.ok) {
-                        throw new Error('Ошибка ответа от сервера');
-                    }
+                    if (!res.ok) throw new Error('Ошибка ответа от сервера')
                     return res.json()
                 })
                 .then(data => {
@@ -129,26 +123,28 @@ export const Chat = (): JSX.Element => {
                     setError('Не удалось создать комнату. Проверьте подключение к серверу')
                     console.error(err)
                 })
-
-        }
     }
 
     const addMessageHandler = (messageText: string) => {
-        const trimmedMessageText = messageText.trim();
-        if (activeRoom === null || trimmedMessageText === '') {
-            return;
-        }
-        fetch(`http://localhost:3000/rooms/${activeRoom}/messages`, {
+        const trimmedMessageText = messageText.trim()
+        if (activeRoom === null || trimmedMessageText === '') return
+        fetch(`${API_BASE_URL}/rooms/${activeRoom}/messages`, {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
+            headers: {'Content-type': 'application/json'},
             body: JSON.stringify({text: trimmedMessageText})
         })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
+                return res.json()
+            })
             .then(data => {
                 setMessages(prev => [...prev, data])
             })
+            .catch(err => {
+                    setError('Не удалось отправить сообщение. Проверьте подключение к серверу')
+                    console.error(err)
+                }
+            )
     }
 
 
@@ -165,6 +161,6 @@ export const Chat = (): JSX.Element => {
                 </CharArea>
             </ChatScreen>
         </div>
-    );
-};
+    )
+}
 
