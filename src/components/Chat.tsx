@@ -82,15 +82,13 @@ export const Chat = (): JSX.Element => {
                 return res.json()
             })
             .then(() => {
-                setRooms(prev => {
-                    if (roomId === activeRoom) {
-                        const roomIndex = prev.findIndex(r => r.id === roomId)
-                        if (roomIndex !== -1) {
-                            setActiveRoom(prev[roomIndex + 1]?.id || prev[roomIndex - 1]?.id || null)
-                        }
-                    }
-                    return prev.filter(r => r.id !== roomId)
-                })
+                if (roomId === activeRoom) {
+                    // TODO: Handle potential request race when selecting the next active room.
+                    const roomIndex = rooms.findIndex(r => r.id === roomId)
+                    setActiveRoom(rooms[roomIndex + 1]?.id || rooms[roomIndex - 1]?.id || null)
+                }
+                setRooms(prev => prev.filter(r => r.id !== roomId))
+
             })
             .catch(err => {
                 setError('Не удалось удалить комнату. Проверьте подключение к серверу')
@@ -101,28 +99,28 @@ export const Chat = (): JSX.Element => {
 
     const addChatHandler = (roomName: string) => {
         const trimmedRoomName = roomName.trim()
-        if(!trimmedRoomName) return
+        if (!trimmedRoomName) return
 
         setError(null)
-            fetch(`${API_BASE_URL}/rooms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({name: trimmedRoomName})
+        fetch(`${API_BASE_URL}/rooms`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: trimmedRoomName})
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
+                return res.json()
             })
-                .then(res => {
-                    if (!res.ok) throw new Error('Ошибка ответа от сервера')
-                    return res.json()
-                })
-                .then(data => {
-                    setRooms(prev => [...prev, data])
+            .then(data => {
+                setRooms(prev => [...prev, data])
 
-                })
-                .catch(err => {
-                    setError('Не удалось создать комнату. Проверьте подключение к серверу')
-                    console.error(err)
-                })
+            })
+            .catch(err => {
+                setError('Не удалось создать комнату. Проверьте подключение к серверу')
+                console.error(err)
+            })
     }
 
     const addMessageHandler = (messageText: string) => {
