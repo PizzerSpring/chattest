@@ -1,4 +1,4 @@
-import {type ChangeEvent,type KeyboardEvent, useState} from "react";
+import {type ChangeEvent, type KeyboardEvent, useEffect, useState, useRef} from "react";
 import styles from './RoomInputContainer.module.css';
 import type {JSX} from "react";
 
@@ -9,6 +9,22 @@ type RoomInputContainerPropsType = {
 
 export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsType): JSX.Element => {
     const [value, setValue] = useState('');
+    const inputRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+
+        const handleClickOutSide = (e: MouseEvent) => {
+            if(!inputRef.current?.contains(e.target as Node)) {
+                onClose();
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutSide)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutSide);
+        }
+
+    }, [onClose])
 
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value);
@@ -29,7 +45,7 @@ export const RoomInputContainer = ({addRoom, onClose}: RoomInputContainerPropsTy
         }
     }
     return (
-        <div className={styles.roomInputContainer}>
+        <div className={styles.roomInputContainer} ref={inputRef}>
             <input type="text" value={value} placeholder="Название комнаты..." autoFocus onChange={onChangeInputHandler}
                    onKeyDown={addChatEnterHandler}/>
             <button onClick={addChatHandler}>+</button>
