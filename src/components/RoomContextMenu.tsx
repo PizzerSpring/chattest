@@ -13,12 +13,19 @@ export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPr
     const menuRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
-        const menuElement = menuRef.current;
-        if(menuElement) {
-            menuElement.focus();
-        }
+            const handleClickOutSide = (e: MouseEvent) => {
+                if(!menuRef.current?.contains(e.target as Node)) {
+                    onClose();
+                }
+            }
+
+            document.addEventListener('mousedown', handleClickOutSide)
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutSide);
+            }
+
         },
-        [])
+        [onClose])
 
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -27,7 +34,7 @@ export const RoomContextMenu = ({roomId, deleteRoom, onClose}: RoomContextMenuPr
     }
 
     return (
-        <button className={styles.deleteRoomMenu} tabIndex={0} ref={menuRef} onClick={handleDelete} onBlur={onClose}>
+        <button className={styles.deleteRoomMenu} ref={menuRef} onClick={handleDelete}>
             Удалить комнату
         </button>
     );
