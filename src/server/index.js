@@ -36,6 +36,15 @@ app.delete('/rooms/:id', (req, res) => {
     rooms = filteredRooms;
     res.json(rooms)
 })
+app.put('/rooms/:id', (req, res) => {
+    const room = rooms.find(room => room.id === +req.params.id)
+    if(room) {
+        const updatedRoom = {...room, name: req.body.name}
+        const newRooms = rooms.map(room => room.id === +req.params.id ? updatedRoom : room)
+        rooms = newRooms;
+        res.json(updatedRoom);
+    }
+})
 
 //Messages endpoints
 
