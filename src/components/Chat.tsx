@@ -123,6 +123,28 @@ export const Chat = (): JSX.Element => {
             })
     }
 
+    const updateRoom = (roomId: number, roomName: string) => {
+        fetch(`${API_BASE_URL}/rooms/${roomId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: roomName})
+
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка ответа от сервера')
+                return res.json()
+            })
+            .then(() => {
+                setRooms(prev => prev.map(room => room.id === roomId ? {...room, name: roomName} : room))
+            })
+            .catch(err => {
+                setError('Не удалось обновить комнату. Проверьте подключение к серверу')
+                console.error(err)
+            })
+    }
+
     const addMessageHandler = (messageText: string) => {
         const trimmedMessageText = messageText.trim()
         if (activeRoom === null || trimmedMessageText === '') return
@@ -151,7 +173,7 @@ export const Chat = (): JSX.Element => {
             <Header/>
             <ChatScreen>
                 <SideBar setActiveRoom={setActiveRoom} rooms={rooms} addRoom={addChatHandler} deleteRoom={deleteRoom}
-                         activeRoom={activeRoom}/>
+                         activeRoom={activeRoom} updateRoom={updateRoom}/>
                 {error && <div>{error}</div>}
                 <CharArea>
                     <MessageList activeRoom={activeRoom} messages={messages}/>

@@ -11,9 +11,10 @@ type SideBarType = {
     setActiveRoom: (roomId: number) => void
     addRoom: (roomName: string) => void
     deleteRoom: (roomId: number) => void
+    updateRoom: (roomId: number, roomName: string) => void
 }
 
-export const SideBar = ({rooms, activeRoom, setActiveRoom, addRoom, deleteRoom}: SideBarType): JSX.Element => {
+export const SideBar = ({rooms, activeRoom, setActiveRoom, addRoom, deleteRoom, updateRoom}: SideBarType): JSX.Element => {
 
     const [isValueActive, setIsValueActive] = useState(false);
 
@@ -23,7 +24,7 @@ export const SideBar = ({rooms, activeRoom, setActiveRoom, addRoom, deleteRoom}:
             <ul>
                 {rooms.map(r =>
                     <Room key={r.id} name={r.name} roomId={r.id} setActiveRoom={setActiveRoom}
-                          activeRoom={activeRoom} deleteRoom={deleteRoom}/>)}
+                          activeRoom={activeRoom} deleteRoom={deleteRoom} updateRoom={updateRoom}/>)}
             </ul>
             {isValueActive ?
                 <RoomInputContainer addRoom={addRoom} onClose={() => {
